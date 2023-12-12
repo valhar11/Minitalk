@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlibert <vlibert@students.42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/12 10:59:53 by vlibert           #+#    #+#             */
+/*   Updated: 2023/12/12 10:59:54 by vlibert          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -22,10 +34,7 @@ int main (int argc, char **argv)
 	if (argc == 3)
 	{
 		pid = atoi(argv[1]);
-		//char *str = argv[2];
-
-			printf("YO\n");
-		while (printf("YO\n") && argv[2][i] && printf("YO\n"))
+		while (argv[2][i])
 		{
 			send_message(pid, argv[2][i]);
 			i++;
