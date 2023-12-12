@@ -1,34 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 
-void afficheBinaire(int);
-int puissance(int a , int b);
-
-int puissance(int a , int b)
+void send_message(int pid, char c)
 {
-	if(b==0)
+	int bit;
+	while (bit < 8)
 	{
-	    return 1 ;
+		if (c & (1 << bit))
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		bit++;
 	}
-	int a1 = a ;
-	for(int i = 1 ; i<b ; i++ )
-	    a *= a1;
-	return a ;
 }
 
 int main (int argc, char **argv)
 {
-	
-	int n = atoi(argv[1]);
- 
-    for(int i = 0 ; n != 0 ; i++)
-    {
- 
-        n += power(10,i) * (n % 2);
-        n /= 2 ;
- 
-    }
+	int pid;
+	int i;
+	if (argc == 3)
+	{
+		pid = atoi(argv[1]);
+		//char *str = argv[2];
 
-	printf("%d", n);
-
+			printf("YO\n");
+		while (printf("YO\n") && argv[2][i] && printf("YO\n"))
+		{
+			send_message(pid, argv[2][i]);
+			i++;
+		}
+	}
+	else
+		printf("Error : The command should look like this\n\t./client <PID> <MESSAGE>");
 }
