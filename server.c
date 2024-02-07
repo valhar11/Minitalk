@@ -6,7 +6,7 @@
 /*   By: vlibert <vlibert@students.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:59:46 by vlibert           #+#    #+#             */
-/*   Updated: 2024/02/06 12:56:43 by vlibert          ###   ########.fr       */
+/*   Updated: 2024/02/07 11:12:47 by vlibert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,36 @@
 
 void	sig_handler(int sig)
 {
-	char c;
-	int i;
+	/**/
+	static int	c;
+	static int i;
+	int	bit;
+	
+	if (sig == SIGUSR1)
+        c |= (1 << i);
+    else if (sig == SIGUSR2)
+        c |= (0 << i);
 
-	i = 0;
-	while (i < 8)
+	i++;
+	if (i == 8)
 	{
-		if(sig == SIGUSR1)
-			c << 1;
-		else
-			c |= (c << bit);
-			
-		
+		write(1, &c, 1);
+		i = 0;
+		c = 0;
 	}
 }
-/**/
+
 int main(void)
 {
-    struct sigaction    sa, osa;
+    struct sigaction    sa;
 
     sa.sa_flags = 0;
     sa.sa_handler = sig_handler;
-    sigaction(SIGUSR1, &sa, &osa);
-    sigaction(SIGUSR2, &sa, &osa);
+    sigaction(SIGUSR1, &sa, NULL);
+    sigaction(SIGUSR2, &sa, NULL);
 	printf("Here is my PID : %d\n", getpid());
     while (1)
-        usleep(1);
+        usleep(100);
     return(0);
 }
 /*
